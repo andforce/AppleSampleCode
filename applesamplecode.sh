@@ -31,7 +31,18 @@ while read n; do
         echo "https://developer.apple.com/library/content/samplecode/$name/$value.zip" >> failed.txt
         echo -e ">>>>>>>>>> downaloed failed!!\n\n"
     fi
+
 #rm $value.zip
+
+#    result=$(curl -m 5 -s https://developer.apple.com/library/content/samplecode/$name/$value.zip | grep 404)
+#    if [[ "$result" != "" ]]
+#    then
+#        echo "NOT FOUND $value.zip"
+#        echo "https://developer.apple.com/library/content/samplecode/$name/$value.zip" >> failed.txt
+#    else
+#        echo "FOUND $value.zip"
+#    fi
+
 
 done <<EOF
 ABUIGroups:ABUIGroups
