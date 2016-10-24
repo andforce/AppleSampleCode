@@ -11,6 +11,8 @@ haveDownedArr=(${haveDowned// / })
 
 rm -rf *.zip
 rm -rf failed.txt
+#https://developer.apple.com/library/content/navigation/library.json
+#https://developer.apple.com/library/content/samplecode/avsubtitleswriterOSX/book.json
 
 while read n; do
 	name=`echo $n | cut -d \: -f 1`
@@ -21,24 +23,24 @@ while read n; do
         continue;
     fi
 
-    echo "start downloading $value https://developer.apple.com/library/content/samplecode/$name/$value.zip"
-	curl -o $value.zip https://developer.apple.com/library/content/samplecode/$name/$value.zip
+    echo "start downloading $name https://developer.apple.com/library/content/samplecode/$value/$value.zip"
+	curl -o $value.zip https://developer.apple.com/library/content/samplecode/$value/$value.zip
 	unzip $value.zip
 
     if [ $? -eq 0 ]; then
         echo -e "########## download success\n\n"
     else
-        echo "https://developer.apple.com/library/content/samplecode/$name/$value.zip" >> failed.txt
+        echo "$name" >> failed.txt
         echo -e ">>>>>>>>>> downaloed failed!!\n\n"
     fi
 
 #rm $value.zip
 
-#    result=$(curl -m 5 -s https://developer.apple.com/library/content/samplecode/$name/$value.zip | grep 404)
+#    result=$(curl -m 5 -s https://developer.apple.com/library/content/samplecode/$value/$value.zip | grep 404)
 #    if [[ "$result" != "" ]]
 #    then
 #        echo "NOT FOUND $value.zip"
-#        echo "https://developer.apple.com/library/content/samplecode/$name/$value.zip" >> failed.txt
+#        echo "$name" >> failed.txt
 #    else
 #        echo "FOUND $value.zip"
 #    fi
@@ -57,16 +59,16 @@ AdoptingMetalII:AdoptingMetalIIDesigningandImplementingaReal-WorldMetalRenderer
 AdvancedURLConnections:AdvancedURLConnections
 AgentsCatalog:AgentsCatalogUsingtheAgentsSysteminGameplayKit
 AirDropExamples:AirDropExamples
-AirLocate:AirLocateUsingCoreLocationtomonitorrangeandconfigureyourdeviceasaniBeacon
+AirLocate:AirLocate
 AlignmentGuides:AlignmentGuidesAppKitHapticFeedbackFilteringusingNSAlignmentFeedbackFilter
 AlternateViews:AlternateViews
 Animalify:AnimalifyUsingSafariAppExtensionstomodifypagesandcommunicatewithnativecode
 AnimatedSlider:AnimatedSlider
 AnimatedTableView:AnimatedTableView
 AnimatingViews:AnimatingViews
-ApertureImageResizer:ApertureImageResizer
+ApertureResizer:ApertureResizer
 APFSCloning:APFSCloningUsingcloneAPIswithAPFS
-AppleFWAudioVendorSpecificOverrideDriver:AppleFWAudioVendorSpecificOverrideDriver
+AFWAVendorSpecificDriver:AFWAVendorSpecificDriver
 ApplicationIconsandLaunchImagesforiOS:ApplicationIconsandLaunchImagesforiOS
 ApplicationShortcuts:ApplicationShortcutsUsingUIApplicationShortcutItem
 AppList:AppList
@@ -80,11 +82,11 @@ AttachAScript:AttachAScript
 AudioCodecExamples:AudioCodecExamples
 AudioConverterFileConvertTest:AudioConverterFileConvertTest
 AudioToolboxConvertFile:AudioToolboxConvertFile
-AudioUISoundsSysSound:AudioUISoundsSysSound
+SysSound:SysSound
 AudioUnitExamplesAudioUnitEffectGeneratorInstrumentMIDIProcessorandOffline:AudioUnitExamplesAudioUnitEffectGeneratorInstrumentMIDIProcessorandOffline
 AudioBurn:AudioBurn
 AudioCDSample:AudioCDSample
-AudioCodecSDKforMacOSX106:AudioCodecSDKforMacOSX106
+AudioCodecSDK:AudioCodecSDK
 AudioCodecSDKforOSXLion107:AudioCodecSDKforOSXLion107
 AudioDeviceNotify:AudioDeviceNotify
 AudioFileStreamExample:AudioFileStreamExample
