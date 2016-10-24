@@ -14,8 +14,9 @@ public class Main {
 
 	private static final String sBaseUrl = "https://developer.apple.com/library/content";
 	private static final String sLibrary = "https://developer.apple.com/library/content/navigation/library.json";
+	private static final String sBook = "https://developer.apple.com/library/content/samplecode/%s/book.json";
 
-	private static final String sZipUrl = "https://developer.apple.com/library/content/samplecode/%s/%s.zip";
+	private static final String sZipUrl = "https://developer.apple.com/library/content/samplecode/%s/%s";
 	
 	private static final String formTitle = "| 名称 | 平台 | 说明 | 下载 | 最后更新时间 |\n| ----- | ----- | ----- | ----- | -----: |\n";
 	private static final String form = 		"| %s  |  %s  |  %s |  %s |     %s     |\n";
@@ -26,7 +27,7 @@ public class Main {
 	private static final String sMDHead = "# AppleSampleCode\nMirror of [Apple Sample Code](https://developer.apple.com/library/content/navigation/index.html#section=Resource%20Types&amp;topic=Sample%20Code)\n\n";
 	
 	public static void main(String[] args) {
-		String libraryJson = getLibraryJson();
+		String libraryJson = getLibraryJson(sLibrary);
 		JSONObject jsonObject = new JSONObject(libraryJson);
 		JSONArray documents = (JSONArray) jsonObject.get("documents");
 		
@@ -43,18 +44,25 @@ public class Main {
 				String introUrl = doc.getString(9);
 				String platform = doc.getString(12).replace("|", "\\|");
 				String zip = introUrl.split("/")[2];
-				String downloadZipUrl = String.format(sZipUrl, zip, zip);
-				String fullIntroUrl = introUrl.replace("..", sBaseUrl);
 				
-				String oneLine = String.format(form, codeName, platform, String.format(sIntroFormat, fullIntroUrl), String.format(sDownloadFormat, downloadZipUrl), lastVersionDate);
+				System.out.println(introUrl + " ->  " + zip + "  " + String.format(sBook, zip));
+				String fullIntroUrl = introUrl.replace("..", sBaseUrl);
+				String bookJson = getLibraryJson(String.format(sBook, zip));
+
+				JSONObject book = new JSONObject(bookJson);
+				
+				String sampleCode = book.getString("sampleCode");
+				
+				System.out.println(sampleCode + "\n\n");
+				String oneLine = String.format(form, codeName, platform, String.format(sIntroFormat, fullIntroUrl), String.format(sDownloadFormat, zip, sampleCode), lastVersionDate);
 				markdown.append(oneLine);
 				size ++;
 			}
 		}
 		
-		System.out.println(size);
-		
-		System.out.println(markdown);
+//		System.out.println(size);
+//		
+//		System.out.println(markdown);
 		
 		try {
 			String data = sMDHead + markdown.toString();
@@ -77,11 +85,11 @@ public class Main {
 		}
 	}
 
-	private static String getLibraryJson() {
+	private static String getLibraryJson(String url) {
 		Process process = null;
 		StringBuffer stringBuffer = new StringBuffer();
 		try {
-			process = Runtime.getRuntime().exec("curl " + sLibrary);
+			process = Runtime.getRuntime().exec("curl " + url);
 			BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line = "";
 			while ((line = input.readLine()) != null) {
