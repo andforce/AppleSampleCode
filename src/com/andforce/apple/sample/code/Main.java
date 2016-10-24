@@ -23,7 +23,7 @@ public class Main {
 	private static final String sIntroFormat = "[说明](%s)";
 	private static final String sDownloadFormat = "[Source Code](%s)";
 	
-	private static final String sMDHead = "# AppleSampleCode\nMirror of [Apple Sample Code]https://developer.apple.com/library/content/navigation/index.html#section=Resource%20Types&amp;topic=Sample%20Code\n\n";
+	private static final String sMDHead = "# AppleSampleCode\nMirror of [Apple Sample Code](https://developer.apple.com/library/content/navigation/index.html#section=Resource%20Types&amp;topic=Sample%20Code)\n\n";
 	
 	public static void main(String[] args) {
 		String libraryJson = getLibraryJson();
