@@ -1,5 +1,5 @@
 # AppleSampleCode
-https://developer.apple.com/library/content/navigation/index.html#section=Resource%20Types&amp;topic=Sample%20Code
+Mirror of [Apple Sample Code]https://developer.apple.com/library/content/navigation/index.html#section=Resource%20Types&amp;topic=Sample%20Code
 
 | 名称 | 平台 | 说明 | 下载 | 最后更新时间 |
 | ----- | ----- | ----- | ----- | -----: |

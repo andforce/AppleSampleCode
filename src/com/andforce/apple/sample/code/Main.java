@@ -23,6 +23,8 @@ public class Main {
 	private static final String sIntroFormat = "[说明](%s)";
 	private static final String sDownloadFormat = "[Source Code](%s)";
 	
+	private static final String sMDHead = "# AppleSampleCode\nMirror of [Apple Sample Code]https://developer.apple.com/library/content/navigation/index.html#section=Resource%20Types&amp;topic=Sample%20Code\n\n";
+	
 	public static void main(String[] args) {
 		String libraryJson = getLibraryJson();
 		JSONObject jsonObject = new JSONObject(libraryJson);
@@ -55,17 +57,17 @@ public class Main {
 		System.out.println(markdown);
 		
 		try {
-			String data = markdown.toString();
+			String data = sMDHead + markdown.toString();
 
-			File file = new File("SampleCode.md");
+			File file = new File("README.md");
 
 			// if file doesnt exists, then create it
 			if (!file.exists()) {
 				file.createNewFile();
-			} 
+			}
 
 			// true = append file
-			FileWriter fileWritter = new FileWriter(file.getName(), true);
+			FileWriter fileWritter = new FileWriter(file.getName(), false);
 			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 			bufferWritter.write(data);
 			bufferWritter.close();
