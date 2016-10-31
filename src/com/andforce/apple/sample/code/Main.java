@@ -89,6 +89,10 @@ public class Main {
 			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 			bufferWritter.write(data);
 			bufferWritter.close();
+			
+			File tmpFile = new File("tmp.json");
+			tmpFile.delete();
+			System.exit(0);
 
 		} catch (IOException e) {
 			e.printStackTrace();
