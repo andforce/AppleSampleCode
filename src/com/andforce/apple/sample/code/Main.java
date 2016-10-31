@@ -3,6 +3,7 @@ package com.andforce.apple.sample.code;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -29,6 +30,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		String libraryJson = getLibraryJson(sLibrary);
+
 		JSONObject jsonObject = new JSONObject(libraryJson);
 		JSONArray documents = (JSONArray) jsonObject.get("documents");
 		
@@ -45,28 +47,32 @@ public class Main {
 				String introUrl = doc.getString(9);
 				String platform = doc.getString(12).replace("|", "\\|");
 				String zip = introUrl.split("/")[2];
-				
-				System.out.println(introUrl + " ->  " + zip + "  " + String.format(sBook, zip));
 				String fullIntroUrl = introUrl.replace("..", sBaseUrl);
+				
+				
 				String bookJson = getLibraryJson(String.format(sBook, zip));
+				if (!bookJson.startsWith("{")) {
+					continue;
+				}
 
 				JSONObject book = new JSONObject(bookJson);
 				
-				String sampleCode = book.getString("sampleCode");
-				
-				System.out.println(sampleCode + "\n\n");
-				
-				String nameAndIntro = String.format(sIntroFormat, codeName, fullIntroUrl);
-				String platformAndDownload = String.format(sDownloadFormat, platform, sampleCode);
-				String oneLine = String.format(form, nameAndIntro, platformAndDownload, lastVersionDate);
-				markdown.append(oneLine);
-				size ++;
+				if (book.has("sampleCode")) {
+					String sampleCode = book.getString("sampleCode");
+					
+					System.out.println(sampleCode + "\n\n");
+					
+					String nameAndIntro = String.format(sIntroFormat, codeName, fullIntroUrl);
+					String platformAndDownload = String.format(sDownloadFormat, platform, sampleCode);
+					String oneLine = String.format(form, nameAndIntro, platformAndDownload, lastVersionDate);
+					markdown.append(oneLine);
+					size ++;
+				} else {
+					continue;
+				}
+
 			}
 		}
-		
-//		System.out.println(size);
-//		
-//		System.out.println(markdown);
 		
 		try {
 			String data = sMDHead + markdown.toString();
@@ -93,16 +99,34 @@ public class Main {
 		Process process = null;
 		StringBuffer stringBuffer = new StringBuffer();
 		try {
-			process = Runtime.getRuntime().exec("curl " + url);
-			BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			String line = "";
-			while ((line = input.readLine()) != null) {
-				stringBuffer.append(line);
+			process = Runtime.getRuntime().exec("rm -rf tmp.json");
+
+			try {
+				if (process.waitFor() == 0) {
+					process = Runtime.getRuntime().exec("curl -o tmp.json " + url);
+					
+					if (process.waitFor() == 0) {
+						File file = new File("tmp.json");
+						
+						BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+						String line = "";
+						while ((line = input.readLine()) != null) {
+							stringBuffer.append(line);
+							System.out.println("URL : " +url);
+							System.out.println("->> " +line);
+						}
+						input.close();
+					}
+
+				}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			input.close();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return stringBuffer.toString();
+		return stringBuffer.toString().trim();
 	}
 }
