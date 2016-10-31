@@ -18,11 +18,12 @@ public class Main {
 
 	private static final String sZipUrl = "https://developer.apple.com/library/content/samplecode/%s/%s";
 	
-	private static final String formTitle = "| 名称 | 平台 | 说明 | 下载 | 最后更新时间 |\n| ----- | ----- | ----- | ----- | -----: |\n";
-	private static final String form = 		"| %s  |  %s  |  %s |  %s |     %s     |\n";
+	private static final String formTitle = "|  名称  | 平台&下载 |  最后更新时间  |\n"
+										  + "| ----- |  -----   |   -----:   |\n";
+	private static final String form = 		"|   %s  |    %s    |     %s     |\n";
 	
-	private static final String sIntroFormat = "[说明](%s)";
-	private static final String sDownloadFormat = "[Source Code](%s)";
+	private static final String sIntroFormat = "[%s](%s)";
+	private static final String sDownloadFormat = "[%s](%s)";
 	
 	private static final String sMDHead = "# AppleSampleCode\nMirror of [Apple Sample Code](https://developer.apple.com/library/content/navigation/index.html#section=Resource%20Types&amp;topic=Sample%20Code)\n\n";
 	
@@ -54,7 +55,10 @@ public class Main {
 				String sampleCode = book.getString("sampleCode");
 				
 				System.out.println(sampleCode + "\n\n");
-				String oneLine = String.format(form, codeName, platform, String.format(sIntroFormat, fullIntroUrl), String.format(sDownloadFormat, zip, sampleCode), lastVersionDate);
+				
+				String nameAndIntro = String.format(sIntroFormat, codeName, fullIntroUrl);
+				String platformAndDownload = String.format(sDownloadFormat, platform, sampleCode);
+				String oneLine = String.format(form, nameAndIntro, platformAndDownload, lastVersionDate);
 				markdown.append(oneLine);
 				size ++;
 			}
