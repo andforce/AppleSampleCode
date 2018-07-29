@@ -14,8 +14,8 @@ import org.json.JSONObject;
 public class Main {
 
 	private static final String sBaseUrl = "https://developer.apple.com/library/content";
-	private static final String sLibrary = "https://developer.apple.com/library/content/navigation/library.json";
-	private static final String sBook = "https://developer.apple.com/library/content/samplecode/%s/book.json";
+	private static final String sLibrary = "https://developer.apple.com/library/archive/navigation/library.json";
+	private static final String sBook = "https://developer.apple.com/library/archive/samplecode/%s/book.json";
 
 	private static final String sZipUrl = "https://developer.apple.com/library/content/samplecode/%s/%s";
 	
@@ -115,7 +115,7 @@ public class Main {
 						BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 						String line = "";
 						while ((line = input.readLine()) != null) {
-							stringBuffer.append(line);
+							stringBuffer.append(line.trim());
 							System.out.println("URL : " +url);
 							System.out.println("->> " +line);
 						}
