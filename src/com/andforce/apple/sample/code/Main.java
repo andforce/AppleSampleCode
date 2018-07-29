@@ -59,9 +59,9 @@ public class Main {
 				
 				if (book.has("sampleCode")) {
 					String sampleCode = book.getString("sampleCode");
-					String title = book.getString("title");
+					//String title = book.getString("title").replace(" ", "_");
 
-					String downloadZip = String.format(sZipUrl, title, sampleCode);
+					String downloadZip = String.format(sZipUrl, sampleCode.split("\\.")[0], sampleCode);
 
 					System.out.println(sampleCode + "\n\n");
 					
