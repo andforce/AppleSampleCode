@@ -13,12 +13,12 @@ import org.json.JSONObject;
 
 public class Main {
 
-	private static final String sBaseUrl = "https://developer.apple.com/library/content";
+	private static final String sBaseUrl = "https://developer.apple.com/library/archive";
 	private static final String sLibrary = "https://developer.apple.com/library/archive/navigation/library.json";
 	private static final String sBook = "https://developer.apple.com/library/archive/samplecode/%s/book.json";
 
-	private static final String sZipUrl = "https://developer.apple.com/library/content/samplecode/%s/%s";
-	
+	private static final String sZipUrl = "https://developer.apple.com/library/archive/samplecode/%s/%s";
+
 	private static final String formTitle = "|  名称  | 平台&下载 |  最后更新时间  |\n"
 										  + "| ----- |  -----   |   -----:   |\n";
 	private static final String form = 		"|   %s  |    %s    |     %s     |\n";
