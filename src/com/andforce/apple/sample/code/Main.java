@@ -59,11 +59,14 @@ public class Main {
 				
 				if (book.has("sampleCode")) {
 					String sampleCode = book.getString("sampleCode");
-					
+					String title = book.getString("title");
+
+					String downloadZip = String.format(sZipUrl, title, sampleCode);
+
 					System.out.println(sampleCode + "\n\n");
 					
 					String nameAndIntro = String.format(sIntroFormat, codeName, fullIntroUrl);
-					String platformAndDownload = String.format(sDownloadFormat, platform, sampleCode);
+					String platformAndDownload = String.format(sDownloadFormat, platform, downloadZip);
 					String oneLine = String.format(form, nameAndIntro, platformAndDownload, lastVersionDate);
 					markdown.append(oneLine);
 					size ++;
